@@ -1,16 +1,25 @@
+import { VscGithubInverted } from "react-icons/vsc";
+import { FaTools } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 function Header() {
   return (
-    <header className="bg-red-500 flex items-center justify-between">
-      <img
-        className=" w-24"
-        src="https://cdn.pixabay.com/photo/2022/01/17/22/20/add-6945894_1280.png"
-        alt=""
-      />
-      <ul className="flex items-center gap-20 mr-20">
-        <li>link</li>
-        <li>link</li>
-        <li>link</li>
-      </ul>
+    <header className=" flex items-center justify-between">
+      <Link
+        to="/"
+        className="flex items-center m-3 md:m-5 gap-4 md:text-xl lg:text-2xl text-lg font-medium">
+        <FaTools className="lg:text-3xl md:text-2xl sm:text-xl  text-green-600" />
+        <p>Muli-tools</p>
+      </Link>
+
+      <div className="flex items-center gap30 mr-2 md:mr-20">
+        <a
+          href="https://github.com/Soufi-ane/multi-tools"
+          className="flex items-center gap-2 cursor-pointer  hover:bg-white transition-all duration-100 px-4 py-2  rounded-md justify-center sm:text-lg text-base">
+          <VscGithubInverted />
+          <span>Github</span>
+        </a>
+      </div>
     </header>
   );
 }

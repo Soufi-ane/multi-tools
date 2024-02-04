@@ -1,25 +1,28 @@
-import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import Qrcode from "./pages/Qrcode";
+import Dashboard from "./ui/Dashboard";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
     element: <AppLayout />,
     children: [
       {
         path: "/qr-code",
         element: <Qrcode />,
       },
+      {
+        path: "/",
+        element: <Dashboard />,
+      },
     ],
   },
 ]);
 function App() {
   return (
-    <div className="text-red-500">
-      {" "}
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 
