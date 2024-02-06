@@ -2,35 +2,27 @@ import { useEffect, useState } from "react";
 import Container from "../ui/Container";
 import BackHome from "../ui/BackHome";
 
-const API_KEY = "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";
-const API_URL = "https://api.openai.com/v1/engines/davinci-codex/completions";
-
 function TextTranslator() {
   const [base, setBase] = useState("");
+  const [from, setFrom] = useState("en");
+  const [to, setTo] = useState("ar");
   const [translated, setTranslated] = useState("");
+  const [isTranslating, setIsTranslating] = useState(false);
 
   useEffect(
     function () {
       async function getTranslation() {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-          },
-          body: JSON.stringify({
-            prompt: `Translate the following English text to French: "${base}"`,
-            max_tokens: 100,
-            n: 1,
-          }),
-        });
+        setIsTranslating(true);
+        const res = await fetch(
+          `https://655.mtis.workers.dev/translate?text=${base}&source_lang=${from}&target_lang=${to}`
+        );
         const data = await res.json();
-        console.log(data);
-        // setTranslated(data.choices[0].text.trim());
+        setIsTranslating(false);
+        setTranslated(data.response.translated_text);
       }
       getTranslation();
     },
-    [base]
+    [base, from, to]
   );
 
   return (
@@ -40,19 +32,19 @@ function TextTranslator() {
       <div className="flex items-center gap-3 justify-center">
         <p className="hidden lg:inline">Translate from</p>
         <select className="py-1.5 px-3 rounded-md" name="from">
-          <option value="">English</option>
-          <option value="">Arabic</option>
-          <option value="">Spanish</option>
-          <option value="">Russian</option>
-          <option value="">French</option>
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+          <option value="es">Spanish</option>
+
+          <option value="fr">French</option>
         </select>
         <p>to</p>
         <select className="py-1.5 px-3 rounded-md" name="to">
-          <option value="">Spanish</option>
-          <option value="">Arabic</option>
-          <option value="">Enlish</option>
-          <option value="">Russian</option>
-          <option value="">French</option>
+          <option value="es">Spanish</option>
+          <option value="ar">Arabic</option>
+          <option value="en">Enlish</option>
+
+          <option value="fr">French</option>
         </select>
       </div>
       <div className="flex flex-col md:flex-row gap-5 xl:gap-10">
@@ -64,7 +56,9 @@ function TextTranslator() {
           placeholder="Type something to translate ..."
         />
         <div className="border-2 p-2 h-[15rem] md:w-[17rem] w-[19rem] xl:w-[25rem] 2xl:w-[30rem] rounded-md">
-          {base ? "Translating..." : "Nothing to translate yet..."}
+          {base && !isTranslating && { translated }}
+          {base && isTranslating && "Translating ..."}
+          {!base && "Nothin to translate yet..."}
         </div>
       </div>
     </Container>
