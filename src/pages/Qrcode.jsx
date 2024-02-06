@@ -1,6 +1,8 @@
 import QRCode from "qrcode.react";
 import { useState } from "react";
 import BackHome from "../ui/BackHome";
+import Container from "../ui/Container";
+import Button from "../ui/Button";
 
 function Qrcode() {
   const [link, setLink] = useState("");
@@ -15,10 +17,11 @@ function Qrcode() {
   }
 
   return (
-    <div className="bg-white w-11/12 md:w-9/12 h-[90%] mx-auto mt-10 rounded-md relative flex flex-col gap-16 py-16 px-32 items-center">
+    <Container>
       <BackHome />
+
       <form
-        className="flex flex-col md:flex-row items-center gap-5"
+        className="flex flex-col md:flex-row items-center gap-5 "
         onSubmit={(e) => HandleConvert(e)}>
         <input
           value={link}
@@ -28,14 +31,12 @@ function Qrcode() {
           placeholder="Text to covert ..(www.example.com)"
         />
 
-        <button className="bg-stone-100 hover:bg-stone-200  transition-all px-6 py-2.5 rounded-md">
-          Convert
-        </button>
+        <Button>Convert</Button>
       </form>
       <div className="border-2 w-72 h-72 flex items-center justify-center -order-1 md:order-2">
         <QRCode size={230} value={Value} />
       </div>
-    </div>
+    </Container>
   );
 }
 
