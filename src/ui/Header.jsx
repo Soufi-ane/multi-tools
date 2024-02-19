@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className=" flex items-center justify-between">
+    <header className="flex items-center justify-between fixed z-20  bg-white w-full">
       <Link
         to="/"
         className="flex items-center m-3 md:m-5 md:ml-10 md:mt-6 gap-4 md:text-xl lg:text-2xl text-lg font-medium">
         <FaTools className="lg:text-3xl md:text-2xl sm:text-xl  text-green-600" />
-        <p>Muli-tools</p>
+        <p>Multi-tools</p>
       </Link>
 
       <div className="flex items-center md:mr-12">
