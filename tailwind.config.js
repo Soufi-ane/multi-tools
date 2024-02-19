@@ -7,6 +7,22 @@ export default {
         103: "1.03",
       },
     },
-    plugins: [],
+    plugins: [
+      function ({ addUtilities }) {
+        const newUtilities = {
+          ".scrollbar-thin::-webkit-scrollbar-thumb": {
+            width: "2px",
+          },
+          ".scrollbar-thumb-transparent::-webkit-scrollbar-thumb": {
+            background: "transparent",
+          },
+          ".scrollbar-track-transparent::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+        };
+
+        addUtilities(newUtilities, ["responsive", "hover"]);
+      },
+    ],
   },
 };
