@@ -3,8 +3,9 @@ import AppLayout from "./ui/AppLayout";
 import Qrcode from "./pages/Qrcode";
 import Dashboard from "./ui/Dashboard";
 import CurrencyConveter from "./pages/CurrencyConveter";
-import TextTranslator from "./pages/TextTranslator";
+
 import PageNotFound from "./pages/PageNotFound";
+import TextManipulation from "./pages/TextManipulation";
 
 export const router = createBrowserRouter([
   {
@@ -24,8 +25,8 @@ export const router = createBrowserRouter([
         element: <CurrencyConveter />,
       },
       {
-        path: "/text-translator",
-        element: <TextTranslator />,
+        path: "/text-manipulation",
+        element: <TextManipulation />,
       },
     ],
   },
