@@ -5,3 +5,12 @@
 * {
   font-family: "Poppins";
 }
+
+::-webkit-scrollbar-thumb {
+  background-color: #aba9a9; /* Change the color as needed */
+  border-radius: 8px; /* Adjust the border-radius as needed */
+}
+
+::-webkit-scrollbar {
+  width: 6px; /* Adjust the width as needed */
+}
