@@ -36,46 +36,79 @@ const currencies = {
   USD: "United States Dollar",
   ZAR: "South African Rand",
 };
-const apiUrl = "https://community-neutrino-currency-conversion.p.rapidapi.com/convert";
-const apiKey = "TGkHkxTF1ZJ87lpWIzg8JJh8Z1VB6xV5IXUHQzJHikt7ZRJU";
 
 function CurrencyConveter() {
   const [amount, setAmount] = useState("");
-  const [from, setFrom] = useState("MAD");
+  const [from, setFrom] = useState("EUR");
   const [to, setTo] = useState("USD");
-  const [converted, setConverted] = useState("Converted");
+
+  const [isConverting, setIsConverting] = useState(false);
+  const [converted, setConverted] = useState(0);
 
   const host = "api.frankfurter.app";
 
   useEffect(
     function () {
       async function Convert() {
-        const res = await fetch(`https://${host}/latest?amount=${amount}&from${from}&to=${to}`);
-        const data = await res.json();
-        setConverted(data.rates[to]);
+        setIsConverting(true);
+        try {
+          const res = await fetch(`https://${host}/latest?amount=${amount}&from=${from}&to=${to}`);
+          const data = await res.json();
+          if (amount) {
+            setConverted(data.rates[to]);
+          } else {
+            setConverted(0);
+          }
+        } catch (e) {
+          throw new Error(e);
+        } finally {
+          setIsConverting(false);
+        }
       }
       Convert();
     },
     [amount, from, to]
   );
 
+  function HandleKeyDown(e) {
+    const numbersOnly = /^[1-9]\d*$/;
+    if (e.key == ".") return;
+    if (!numbersOnly.test(e.key) && e.key !== "Backspace") e.preventDefault();
+  }
+  function HandleInput(e) {
+    const last = e.target.value.split("").at(-1);
+    const beforeLast = e.target.value.split("").at(-2);
+    console.log(beforeLast);
+
+    if (last == "." && beforeLast == ".") {
+      const noDot = e.target.value.split("").slice(0, -1).join("");
+      setAmount(noDot);
+      console.log(noDot);
+    }
+    // console.log(e);
+  }
   return (
     <Container className="gap-10">
       <BackHome />
-      <form className="flex flex-col lg:flex-row items-center gap-5 sm:pt-28 md:pt-10 pb-10 sm:pb-0">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="flex flex-col lg:flex-row items-center gap-5 sm:pt-28 md:pt-10 pb-10 sm:pb-0">
         <div className="flex flex-col sm:flex-row items-center gap-2 md:gap-5">
           <input
-            className="border-2 py-2 px-3 rounded-md w-40"
+            className="border-2 py-2 px-3 rounded-md w-40 focus:outline-stone-400"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            type="number"
-            placeholder="0"
+            onKeyDown={(e) => HandleKeyDown(e)}
+            onInput={(e) => HandleInput(e)}
+            maxLength={8}
+            type="text"
+            placeholder="Amount"
           />
           <p>From</p>
           <select
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="py-2.5 px-5 rounded-md"
+            className="py-2.5 px-5 rounded-md focus:outline-stone-400"
             name="currency">
             {Object.entries(currencies).map(([code]) => (
               <option key={code} value={code}>
@@ -87,7 +120,7 @@ function CurrencyConveter() {
           <select
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="py-2.5 px-5 rounded-md"
+            className="py-2.5 px-5 rounded-md focus:outline-stone-400"
             name="currency">
             {Object.entries(currencies).map(([code]) => (
               <option key={code} value={code}>
@@ -104,7 +137,10 @@ function CurrencyConveter() {
         </span>
 
         <span>is </span>
-        <span className="border-2 py-2 px-5 rounded-md md:ml-3">
+        <span
+          className={`border-2 py-2 px-5 rounded-md ml-2 md:ml-31 ${
+            isConverting ? "text-stone-400" : ""
+          }`}>
           {converted}
           <span className="ml-2">{to}</span>
         </span>

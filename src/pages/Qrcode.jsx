@@ -21,12 +21,12 @@ function Qrcode() {
       <BackHome />
 
       <form
-        className="flex flex-col md:flex-row items-center gap-5 "
+        className="flex flex-col md:flex-row items-center gap-5"
         onSubmit={(e) => HandleConvert(e)}>
         <input
           value={link}
           onChange={(e) => setLink(e.target.value)}
-          className="border-2 py-2 px-3 rounded-lg w-72"
+          className="border-2 py-2 px-3 rounded-lg w-72 focus:outline-stone-400"
           type="text"
           placeholder="Text to covert ..(www.example.com)"
         />
