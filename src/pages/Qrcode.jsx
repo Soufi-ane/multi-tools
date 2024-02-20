@@ -25,6 +25,7 @@ function Qrcode() {
         onSubmit={(e) => HandleConvert(e)}>
         <input
           value={link}
+          maxLength={500}
           onChange={(e) => setLink(e.target.value)}
           className="border-2 py-2 px-3 rounded-lg w-72 focus:outline-stone-400"
           type="text"
