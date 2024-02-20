@@ -137,8 +137,6 @@ function TextManipulation() {
             // onChange={(e) => setResult(e.target.value)}
           >
             <span className="text-stone-600" ref={divRef}></span>
-
-            <Toaster />
           </div>
           <button
             onClick={HandleCopy}
